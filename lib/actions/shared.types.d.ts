@@ -6,7 +6,7 @@ import { IUser } from "@/database/user.model";
  * Common interfaces used in actions
  */
 interface ClerkId {
-  clerkId?: string;
+  clerkId: string;
 }
 
 interface UserId {

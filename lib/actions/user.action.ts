@@ -60,7 +60,7 @@ export async function deleteUser(userData:DeleteUserParams){
 
     const {clerkId}=userData;
 
-    const user =await User.findByIdAndDelete({clerkId});
+    const user = await User.findOneAndDelete({ clerkId });
 
     if(!user){
       throw new Error("User not found");
@@ -68,7 +68,7 @@ export async function deleteUser(userData:DeleteUserParams){
 
     // const userQuestion=await Question.find({author:user._id}).distinct('_id');
 
-    //@ts-ignore
+   
     await Question.deleteMany({author:user._id});
 
     //TODO delete commnet ans etc..
@@ -79,11 +79,6 @@ export async function deleteUser(userData:DeleteUserParams){
 
     return deletedUser;
 
-
-
-
-  
-    
   } catch (error) {
     console.log(error);
     throw error;
