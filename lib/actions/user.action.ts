@@ -13,7 +13,12 @@ export async function getUserById(prams:GetUserByIdParams){
     connectToDatabase();
     const {userId}=prams;
 
-    const user=await User.findOne({clerkId:userId});
+    const user = await User.findOne({
+      clerkId: userId,
+    });
+
+    console.log("this is user",user);
+
   
     return user;
     

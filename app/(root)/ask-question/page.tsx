@@ -2,21 +2,21 @@ import Question from '@/components/forms/Question'
 import { getUserById } from '@/lib/actions/user.action';
 import { auth } from '@clerk/nextjs'
 import { redirect } from 'next/navigation';
-import { stringify } from 'querystring';
 import React from 'react'
 
 
 
 const Page = async() => {
- // const {userId}=auth();
 
-  const userId='123456';
+  const { userId } = auth();
 
-  if(!userId){
-    redirect('/sign-in')
-  }
+  console.log(userId);
 
-  const mongoUser=await getUserById({userId});
+  if (!userId) return null;
+
+  const mongoUser = await getUserById({ userId });
+
+  console.log(mongoUser);
   
   return (
     <div>
