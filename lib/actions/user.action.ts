@@ -2,7 +2,7 @@
 
 import User from "@/database/user.model";
 import { connectToDatabase } from "../moongoose"
-import { CreateUserParams, DeleteUserParams, GetUserByIdParams, UpdateUserParams } from "./shared.types";
+import { CreateUserParams, DeleteUserParams, GetAllUsersParams, GetUserByIdParams, UpdateUserParams } from "./shared.types";
 import { revalidatePath } from "next/cache";
 import Question from "@/database/question.model";
 
@@ -79,7 +79,7 @@ export async function deleteUser(userData:DeleteUserParams){
     //TODO delete commnet ans etc..
 
 
-    //@ts-ignore
+   
     const deletedUser=await User.findByIdAndDelete(user._id);
 
     return deletedUser;
@@ -89,3 +89,40 @@ export async function deleteUser(userData:DeleteUserParams){
     throw error;
   }
 }
+
+
+export async function getAllUsers(prams:GetAllUsersParams){
+
+  try {
+    connectToDatabase();
+
+    //const {page=1,pageSize=20,filter,searchQuery}=prams;
+
+    const users = await User.find({})
+    .sort({createdAt:-1})
+    
+    
+    return {users};
+
+    
+  } catch (error) {
+    console.log(error);
+    throw error;
+    
+  }
+
+}
+
+
+// export async function getAllUsers(prams:GetAllUsersParams){
+
+//   try {
+//     connectToDatabase();
+    
+//   } catch (error) {
+//     console.log(error);
+//     throw error;
+    
+//   }
+
+// }
