@@ -1,5 +1,9 @@
 # DevFlow: Empowering Developers Beyond StackOverflow
 
+
+![image](https://github.com/alok-mishra143/Dev-flow/assets/100504874/4b549597-c6cd-4f80-bff5-c843cbf8988e)
+
+
 ## Overview
 
 Welcome to DevFlow, the upgraded form of StackOverflow designed to enhance the development experience for developers worldwide. DevFlow is a collaborative platform that goes beyond traditional Q&A, fostering a community-driven ecosystem where developers can seamlessly share knowledge, collaborate on projects, and elevate their coding skills.
@@ -44,7 +48,7 @@ To clone and run DevFlow locally, follow these instructions:
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/yourusername/devflow.git
+   git clone https://github.com/alok-mishra143/Dev-flow.git
    ```
 
 2. **Navigate to the Project Directory:**
@@ -77,12 +81,6 @@ To ensure a positive and collaborative environment, please adhere to our communi
 - Refrain from spamming or engaging in any form of malicious activity.
 - Ensure your contributions align with our content guidelines.
 
-## Feedback and Support
 
-We value your feedback! If you encounter any issues, have suggestions for improvement, or need assistance, please reach out to our support team at support@devflow.com.
-
-## License
-
-DevFlow is licensed under the [MIT License](LICENSE). Feel free to contribute and share!
 
 Happy coding on DevFlow! 🚀
