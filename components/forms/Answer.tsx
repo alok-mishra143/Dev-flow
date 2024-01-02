@@ -111,10 +111,28 @@ const Answer = ({
                     }}
                     init={{
                       menubar: false,
-                      plugins:
-                        " mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed   powerpaste tinymcespellchecker  a11ychecker ",
+                      plugins: [
+                        "advlist",
+                        "autolink",
+                        "lists",
+                        "link",
+                        "image",
+                        "charmap",
+                        "preview",
+                        "anchor",
+                        "searchreplace",
+                        "visualblocks",
+                        "codesample",
+                        "fullscreen",
+                        "insertdatetime",
+                        "media",
+                        "table",
+                        "wordcount",
+                      ],
                       toolbar:
-                        "undo redo | codesample | bold italic underline  | link image media table  | align lineheight  | checklist numlist bullist  ",
+                        "undo redo | " +
+                        "codesample | bold italic forecolor | alignleft aligncenter |" +
+                        "alignright alignjustify | bullist numlist outdent indent",
                       content_style:
                         "body { font-family:Inter; font-size:16px }",
                       skin: mode === "dark" ? "oxide-dark" : "oxide",
