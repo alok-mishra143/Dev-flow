@@ -1,77 +1,88 @@
-"use server"
+"use server";
 
 import Question from "@/database/question.model";
-import { connectToDatabase } from "../moongoose"
+import { connectToDatabase } from "../moongoose";
 import Tag from "@/database/tag.model";
-import { CreateQuestionParams, GetQuestionsParams } from "./shared.types";
+import {
+  CreateQuestionParams,
+  GetQuestionByIdParams,
+  GetQuestionsParams,
+} from "./shared.types";
 import User from "@/database/user.model";
 import { revalidatePath } from "next/cache";
 
-
-export async function GetQuestion(params:GetQuestionsParams){
-
+export async function GetQuestion(params: GetQuestionsParams) {
   try {
     connectToDatabase();
-    const question= await Question.find({})
-     .populate({path:'tags',model:Tag})
-     .populate({path:'author',model:User})
-     .sort({createdAt:-1})
-   
+    const question = await Question.find({})
+      .populate({ path: "tags", model: Tag })
+      .populate({ path: "author", model: User })
+      .sort({ createdAt: -1 });
 
-     return {question}
-    
-
+    return { question };
   } catch (error) {
     console.log(error);
     throw error;
   }
-
 }
 
-export async function CreateQuestion(prams:CreateQuestionParams){
-  try{
-
+export async function CreateQuestion(prams: CreateQuestionParams) {
+  try {
     connectToDatabase();
-    const {title,content,tags,author,path}=prams
+    const { title, content, tags, author, path } = prams;
 
-    //create a question 
+    //create a question
 
-    const question=await Question.create({
+    const question = await Question.create({
       title,
       content,
-      author
+      author,
     });
 
-    const tagDocument=[];
+    const tagDocument = [];
 
     //getting the tags from the database
 
-    for(const tag of tags){
-      const existingTag=await Tag.findOneAndUpdate(
+    for (const tag of tags) {
+      const existingTag = await Tag.findOneAndUpdate(
+        { name: { $regex: new RegExp(`^${tag}$`, "i") } },
+        { $setOnInsert: { name: tag }, $push: { questions: question._id } },
 
-        {name:{$regex:new RegExp(`^${tag}$`,'i')}},
-        {$setOnInsert:{name:tag},$push:{questions:question._id}},
-
-        {upsert:true,new:true}
+        { upsert: true, new: true }
       );
 
       tagDocument.push(existingTag._id);
     }
-    await Question.findByIdAndUpdate(question._id,{
-      $push:{tags:{$each:tagDocument}}
-    })
+    await Question.findByIdAndUpdate(question._id, {
+      $push: { tags: { $each: tagDocument } },
+    });
 
+    //craete a question and tags
 
-    //craete a question and tags 
-
-
-    revalidatePath(path)
-    
-
-  }
-  catch(e){
+    revalidatePath(path);
+  } catch (e) {
     console.error("Error creating question:", e);
-    throw e; 
+    throw e;
+  }
+}
 
+export async function GetQuestionById(params: GetQuestionByIdParams) {
+  try {
+    connectToDatabase();
+
+    const { questionId } = params;
+
+    const question = await Question.findById(questionId)
+      .populate({ path: "tags", model: Tag, select: "_id name" })
+      .populate({
+        path: "author",
+        model: User,
+        select: "_id clerkId name picture",
+      });
+
+    return question;
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 }

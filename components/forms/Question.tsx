@@ -24,17 +24,19 @@ import { Badge } from "../ui/badge";
 import Image from "next/image";
 import { CreateQuestion } from "@/lib/actions/Question.action";
 
-import { useRouter,usePathname } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import { useTheme } from "@/context/ThemeProvider";
 
-interface props{
-  mongoUserId:string;
+interface props {
+  mongoUserId: string;
 }
 
-
-const Question = ({mongoUserId}:props) => {
+const Question = ({ mongoUserId }: props) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const router=useRouter();
-  const pathname=usePathname();
+  const router = useRouter();
+  const pathname = usePathname();
+  const editorRef = useRef(null);
+  const { mode } = useTheme();
 
   const handleInputKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
@@ -70,7 +72,6 @@ const Question = ({mongoUserId}:props) => {
     form.setValue("tags", tags);
   };
 
-  const editorRef = useRef(null);
   // 1. Define your form.
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
@@ -94,11 +95,9 @@ const Question = ({mongoUserId}:props) => {
         author: JSON.parse(mongoUserId),
         path: pathname,
       });
-      router.push('/');
-
+      router.push("/");
     } catch (error) {
-      
-    } finally{
+    } finally {
       setIsSubmitting(false);
     }
   }
@@ -143,6 +142,10 @@ const Question = ({mongoUserId}:props) => {
               <FormControl className="mt-3.5 ">
                 <Editor
                   apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API}
+                  onInit={(evt, editor) => {
+                    // @ts-ignore
+                    editorRef.current = editor;
+                  }}
                   init={{
                     menubar: false,
                     plugins:
@@ -150,9 +153,11 @@ const Question = ({mongoUserId}:props) => {
                     toolbar:
                       "undo redo | codesample | bold italic underline  | link image media table  | align lineheight  | checklist numlist bullist  ",
                     content_style: "body { font-family:Inter; font-size:16px }",
+                    skin: mode === "dark" ? "oxide-dark" : "oxide",
+                    content_css: mode === "dark" ? "dark" : "light",
                   }}
                   onBlur={field.onBlur}
-                  onEditorChange={(content)=> field.onChange(content)}
+                  onEditorChange={(content) => field.onChange(content)}
                   initialValue=""
                 />
               </FormControl>
