@@ -56,7 +56,6 @@ const Answer = ({
         path: pathname,
       });
 
-
       form.reset();
 
       if (editorRef.current != null) {
@@ -113,7 +112,7 @@ const Answer = ({
                     init={{
                       menubar: false,
                       plugins:
-                        " mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed   powerpaste tinymcespellchecker autocorrect a11ychecker ",
+                        " mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed   powerpaste tinymcespellchecker  a11ychecker ",
                       toolbar:
                         "undo redo | codesample | bold italic underline  | link image media table  | align lineheight  | checklist numlist bullist  ",
                       content_style:
