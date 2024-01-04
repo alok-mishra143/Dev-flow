@@ -18,7 +18,7 @@ interface props {
     name: string;
     picture: string;
   };
-  upvotes: number;
+  upvotes: string[];
   view: number;
   answer: Array<Object>;
   createdAt: Date;
@@ -48,7 +48,7 @@ const QuestionCard = ({
           </Link>
         </div>
 
-         {/* <SignedIn>
+        {/* <SignedIn>
         {showActionButtons && (
           <EditDeleteAction type="Question" itemId={JSON.stringify(_id)} />
         )}
@@ -60,7 +60,6 @@ const QuestionCard = ({
           <RenderTag key={tag._id} _id={tag._id} name={tag.name} />
         ))}
       </div>
-
 
       <div className="flex-between mt-6 w-full flex-wrap gap-3">
         <Metric
@@ -76,7 +75,7 @@ const QuestionCard = ({
           <Metric
             imgUrl="/assets/icons/like.svg"
             alt="Upvotes"
-            value={formatAndDivideNumber(upvotes)}
+            value={formatAndDivideNumber(upvotes.length)}
             title=" Votes"
             textStyles="small-medium text-dark400_light800"
           />
