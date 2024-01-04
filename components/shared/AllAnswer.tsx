@@ -45,8 +45,8 @@ const AllAnswers = async ({
                 >
                   <Image
                     src={answer.author.picture}
-                    width={18}
-                    height={18}
+                    width={22}
+                    height={22}
                     alt="profile"
                     className="rounded-full object-cover max-sm:mt-0.5"
                   />
@@ -63,7 +63,15 @@ const AllAnswers = async ({
                 </Link>
 
                 <div className="flex justify-end">
-                  <Votes />
+                  <Votes
+                    type="Answer"
+                    itemId={JSON.stringify(answer._id)}
+                    userId={JSON.stringify(userId)}
+                    upvotes={answer.upvotes.length}
+                    hasupVoted={answer.upvotes.includes(userId)}
+                    downvotes={answer.downvotes.length}
+                    hasdownVoted={answer.downvotes.includes(userId)}
+                  />
                 </div>
               </div>
             </div>
