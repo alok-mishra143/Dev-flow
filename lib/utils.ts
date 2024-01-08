@@ -1,8 +1,8 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
- 
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 export const getTimestamp = (createdAt: Date): string => {
@@ -32,8 +32,6 @@ export const getTimestamp = (createdAt: Date): string => {
 
   return "Just now";
 };
-
-
 
 export const formatAndDivideNumber = (number: number): string => {
   if (number < 1000) return number.toString(); // Return the same number

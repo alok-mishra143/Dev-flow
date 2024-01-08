@@ -9,7 +9,6 @@ import { GetQuestion } from "@/lib/actions/Question.action";
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 
-
 // const question = [
 //   {
 //     _id: '1',
@@ -56,13 +55,12 @@ import Link from "next/link";
 // ];
 
 export default async function Home() {
+  const result = await GetQuestion({});
 
-  const result =await GetQuestion({});
-  
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
-      <h1 className="h1-bold text-dark100_light900">All Questions</h1>
+        <h1 className="h1-bold text-dark100_light900">All Questions</h1>
         <Link href={"/ask-question"} className="flex justify-end max:sm:w-full">
           <Button className="primary-gradient min-h-[46px] px-4 py-3 !text-light-900">
             Ask question
@@ -96,8 +94,8 @@ export default async function Home() {
               tags={question.tags}
               author={question.author}
               upvotes={question.upvotes}
-              view={question.view}
-              answer={question.answer}
+              views={question.views}
+              answers={question.answers}
               createdAt={question.createdAt}
             />
           ))

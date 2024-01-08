@@ -5,11 +5,12 @@ import {
   upVoteQuestion,
 } from "@/lib/actions/Question.action";
 import { downVoteAnswer, upVoteAnswer } from "@/lib/actions/answer.action";
+import { viewQuestion } from "@/lib/actions/interaction.action";
 import { ToggleSaveQuestion } from "@/lib/actions/user.action";
 import { formatAndDivideNumber } from "@/lib/utils";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 
 interface Props {
   type: string;
@@ -34,6 +35,14 @@ const Votes = ({
 }: Props) => {
   const pathname = usePathname();
   const router = useRouter();
+
+  useEffect(() => {
+    viewQuestion({
+      questionId: JSON.parse(itemId),
+      userId: userId ? JSON.parse(userId) : undefined,
+    });
+  }, [itemId, userId, pathname, router]);
+
   const handleSave = async () => {
     await ToggleSaveQuestion({
       userId: JSON.parse(userId),

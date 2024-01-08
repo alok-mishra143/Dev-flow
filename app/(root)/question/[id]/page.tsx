@@ -78,14 +78,14 @@ const page = async ({ params, searchParams }: URLProps) => {
         <Metric
           imgUrl="/assets/icons/message.svg"
           alt="message"
-          value={formatAndDivideNumber(result.answer?.length)}
+          value={formatAndDivideNumber(result.answers?.length)}
           title=" Answers"
           textStyles="small-medium text-dark400_light800"
         />
         <Metric
           imgUrl="/assets/icons/eye.svg"
           alt="eye"
-          value={formatAndDivideNumber(result.view)}
+          value={formatAndDivideNumber(result.views)}
           title=" Views"
           textStyles="small-medium text-dark400_light800"
         />
