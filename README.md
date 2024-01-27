@@ -1,6 +1,9 @@
 # DevFlow: Empowering Developers Beyond StackOverflow
 
 
+currently woking on this so some feature are not working 
+
+
 ![image](https://github.com/alok-mishra143/Dev-flow/assets/100504874/4b549597-c6cd-4f80-bff5-c843cbf8988e)
 
 
@@ -41,6 +44,53 @@ To get started with DevFlow, follow these simple steps:
 3. **Contribute:** Share your knowledge by creating articles, tutorials, or collaborating on projects. Don't forget to engage with the community by commenting and providing feedback.
 
 4. **Earn Reputation:** Build your reputation on DevFlow by actively participating in discussions, helping others, and contributing valuable content. Watch your badges and reputation points grow as you become an integral part of the community.
+
+##
+
+# Installation Guide
+
+This document provides a step-by-step guide to installing and running the application locally.
+
+## Prerequisites
+
+Before getting started, ensure that you have the following accounts and keys set up:
+
+- [Clerk Account](https://clerk.dev/) for Authentication and User Management.
+- [MongoDB Database](https://www.mongodb.com/) for storing data.
+- [TinyMCE Account](https://www.tiny.cloud/) for rich text editing.
+- [OpenAI Account](https://beta.openai.com/signup/) for utilizing the OpenAI API.
+- [RapidAPI Account](https://rapidapi.com/) and subscription to the JSearch API.
+
+## Configuration
+
+1. Create a file named `.env` in the `server` folder of the project.
+2. Set the following environment variables in the `.env` file:
+
+    ```env
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=<your-clerk-publishable-key>
+    CLERK_SECRET_KEY=<your-clerk-secret-key>
+    NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+    NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+    NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
+    NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
+    WEBHOOK_SECRET=<your-signing-secret>
+    NEXT_PUBLIC_TINY_EDITOR_API=<your-tinymce-api-key>
+    MONGODB_URL=<your-mongodb-url>
+    ```
+
+   Replace `<your-...>` with the actual values from your respective accounts.
+
+## Clerk Webhook
+
+1. Go to the Clerk Dashboard.
+2. Click on the "Webhooks" tab.
+3. Click "Add Endpoint."
+4. For the Endpoint URL, enter `http://<PASTE-YOUR-LINK-HERE>/api/webhook/clerk`.
+5. For events, select "user."
+6. Click "Create" to generate the webhook.
+7. Retrieve the signing secret and set it as `CLERK_WEBHOOK_SECRET` in the `.env` file.
+
+
 
 ## Clone and Run Locally
 
