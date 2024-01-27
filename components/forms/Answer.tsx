@@ -35,6 +35,7 @@ const Answer = ({
   answerData,
 }: Props) => {
   const [isSubmitting, setisSubmitting] = useState(false);
+  const [isSubmittingAi, setIsSubmittingAi] = useState<boolean>(false);
   const { mode } = useTheme();
   const editorRef = useRef(null);
   const pathname = usePathname();
@@ -70,6 +71,41 @@ const Answer = ({
     }
   }
 
+  const generateAiAnswer = async () => {
+    if (!authorId) return;
+
+    setIsSubmittingAi(true);
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/bard`,
+        {
+          method: "POST",
+          body: JSON.stringify({ question }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const aiAnswer = await response.json();
+
+      const formattedAiAnswer = aiAnswer.error
+        ? "Sorry, I could not provide an answer to your question, please try again."
+        : aiAnswer.text.replace(/\n/g, "<br />");
+
+      if (editorRef.current) {
+        const editor = editorRef.current as any;
+        editor.setContent(formattedAiAnswer);
+      }
+    } catch (error) {
+      console.error(error);
+      // Handle errors here, e.g., show an error message
+    } finally {
+      setIsSubmittingAi(false);
+    }
+  };
+
   return (
     <div>
       <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
@@ -79,16 +115,16 @@ const Answer = ({
 
         <Button
           className="btn light-border-2 gap-1.5 rounded-md px-4 py-2.5 text-primary-500 shadow-none dark:text-primary-500"
-          onClick={() => {}}
+          onClick={generateAiAnswer}
         >
           <Image
             src="/assets/icons/stars.svg"
             alt="star"
             width={12}
             height={12}
-            className={`object-contain `}
+            className={`object-contain ${isSubmittingAi && "animate-pulse"}`}
           />
-          Generate AI Answer
+          {isSubmittingAi ? "Generating..." : "Generate AI Answer"}
         </Button>
       </div>
 
