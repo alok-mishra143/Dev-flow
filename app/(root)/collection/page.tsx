@@ -6,13 +6,17 @@ import LocalSearchBar from "@/components/shared/Search/LocalSearchBar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters, QuestionFilters } from "@/constants/filters";
 import { GetQuestion } from "@/lib/actions/Question.action";
-import { GetSavedQuestion } from "@/lib/actions/user.action";
+import { GetSavedQuestion, getUserById } from "@/lib/actions/user.action";
 import { UserButton, auth } from "@clerk/nextjs";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
   const { userId } = auth();
   if (!userId) return null;
+
+  const mongoUser = await getUserById({ userId });
+  if (!mongoUser?.onboarded) redirect("/onboarding");
 
   const result = await GetSavedQuestion({
     clerkId: userId,
