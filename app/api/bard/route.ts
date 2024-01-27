@@ -26,6 +26,6 @@ export const POST = async (request: Request) => {
     return NextResponse.json({ text });
   } catch (error) {
     // Handle errors here
-    return NextResponse.json({ error: error.message || "Unknown error" });
+    return NextResponse.json({ error: error || "Unknown error" });
   }
 };
