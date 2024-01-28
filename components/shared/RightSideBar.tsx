@@ -71,7 +71,7 @@ const RightSideBar = async () => {
       </div>
 
       <div className="mt-7 flex w-full flex-col gap-[30px]">
-        <h3 className="h3-bold text-dark200_light900">Top question</h3>
+        <h3 className="h3-bold text-dark200_light900">Top Tags</h3>
 
         <div className="mt-7 flex flex-col gap-4">
           {popularTags.map((tag) => {
