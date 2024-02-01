@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 const Page = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllTags({
-    // searchQuery: searchParams.q,
+    searchQuery: searchParams.q,
     // filter: searchParams.filter,
     // page: searchParams.page ? +searchParams.page : 1,
   });
@@ -27,8 +27,8 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
 
       <div className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
         <LocalSearchBar
-          route="/community"
-          placeholder="Search for amazing minds"
+          route="/tags"
+          placeholder="Search for tags"
           iconPostition="left"
           imgsrc="/assets/icons/search.svg"
           otherClass="flex-1"

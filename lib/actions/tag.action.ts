@@ -62,7 +62,7 @@ export async function getAllTags(params: GetAllTagsParams) {
   try {
     connectToDatabase();
 
-    //! const { page = 1, pageSize = 10, filter, searchQuery } = params;
+    const { page = 1, pageSize = 10, filter, searchQuery } = params;
 
     // Calculate the number of tags to skip based on the page number and page size
 
@@ -70,9 +70,9 @@ export async function getAllTags(params: GetAllTagsParams) {
 
     const query: FilterQuery<typeof Tag> = {};
 
-    // if (searchQuery) {
-    //   query.$or = [{ name: { $regex: new RegExp(searchQuery, "i") } }];
-    // }
+    if (searchQuery) {
+      query.$or = [{ name: { $regex: new RegExp(searchQuery, "i") } }];
+    }
 
     // let sortOptions = {};
 
@@ -93,7 +93,7 @@ export async function getAllTags(params: GetAllTagsParams) {
     //     break;
     // }
 
-    const tags = await Tag.find({});
+    const tags = await Tag.find(query);
     // .sort(sortOptions)
     // .skip(skipAmount)
     // .limit(pageSize);

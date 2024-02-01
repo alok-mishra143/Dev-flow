@@ -6,6 +6,7 @@ import LocalSearchBar from "@/components/shared/Search/LocalSearchBar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
 import { GetQuestion } from "@/lib/actions/Question.action";
+import { SearchParamsProps } from "@/types";
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 
@@ -54,8 +55,10 @@ import Link from "next/link";
 //   }
 // ];
 
-export default async function Home() {
-  const result = await GetQuestion({});
+export default async function Home({ searchParams }: SearchParamsProps) {
+  const result = await GetQuestion({
+    searchQuery: searchParams.q,
+  });
 
   return (
     <>
