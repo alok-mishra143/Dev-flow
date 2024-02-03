@@ -91,6 +91,7 @@ export async function getAllUsers(prams: GetAllUsersParams) {
     connectToDatabase();
 
     const { page = 1, pageSize = 10, filter, searchQuery } = prams;
+
     const query: FilterQuery<typeof User> = {};
 
     if (searchQuery) {
