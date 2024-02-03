@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 const Page = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllTags({
     searchQuery: searchParams.q,
-    // filter: searchParams.filter,
+    filter: searchParams.filter,
     // page: searchParams.page ? +searchParams.page : 1,
   });
 
@@ -35,7 +35,7 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
         />
 
         <Filter
-          filters={UserFilters}
+          filters={TagFilters}
           otherClass="min-h-[56px] sm:min-w-[170px]"
         />
       </div>

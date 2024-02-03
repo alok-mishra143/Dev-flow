@@ -101,7 +101,7 @@ const Votes = ({
   return (
     <div className="flex gap-5">
       <div className="flex-center gap-2.5">
-        <div className=" flex-center gap-1.5">
+        <div className="flex-center gap-1.5">
           <Image
             src={
               hasupVoted
@@ -114,6 +114,7 @@ const Votes = ({
             className="cursor-pointer"
             onClick={() => handleVote("upvote")}
           />
+
           <div className="flex-center background-light700_dark400 min-w-[18px] rounded-sm p-1">
             <p className="subtle-medium text-dark400_light900">
               {formatAndDivideNumber(upvotes)}
@@ -135,7 +136,7 @@ const Votes = ({
             onClick={() => handleVote("downvote")}
           />
 
-          <div className="flex-center background-light70 0_dark400 min-w-[18px] rounded-sm p-1">
+          <div className="flex-center background-light700_dark400 min-w-[18px] rounded-sm p-1">
             <p className="subtle-medium text-dark400_light900">
               {formatAndDivideNumber(downvotes)}
             </p>

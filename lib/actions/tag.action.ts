@@ -74,27 +74,26 @@ export async function getAllTags(params: GetAllTagsParams) {
       query.$or = [{ name: { $regex: new RegExp(searchQuery, "i") } }];
     }
 
-    // let sortOptions = {};
+    let sortOptions = {};
 
-    // switch (filter) {
-    //   case "popular":
-    //     sortOptions = { questions: -1 };
-    //     break;
-    //   case "recent":
-    //     sortOptions = { createdAt: -1 };
-    //     break;
-    //   case "name":
-    //     sortOptions = { name: 1 };
-    //     break;
-    //   case "old":
-    //     sortOptions = { createdAt: 1 };
-    //     break;
-    //   default:
-    //     break;
-    // }
+    switch (filter) {
+      case "popular":
+        sortOptions = { questions: -1 };
+        break;
+      case "recent":
+        sortOptions = { createdAt: -1 };
+        break;
+      case "name":
+        sortOptions = { name: 1 };
+        break;
+      case "old":
+        sortOptions = { createdAt: 1 };
+        break;
+      default:
+        break;
+    }
 
-    const tags = await Tag.find(query);
-    // .sort(sortOptions)
+    const tags = await Tag.find(query).sort(sortOptions);
     // .skip(skipAmount)
     // .limit(pageSize);
 
