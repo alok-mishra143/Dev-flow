@@ -1,5 +1,6 @@
 import HomeFilter from "@/components/Home/HomeFilter";
 import QuestionCard from "@/components/card/QuestionCard";
+import Custom_pagination from "@/components/shared/Custom_pagination";
 import Filter from "@/components/shared/Filter";
 import NoResult from "@/components/shared/NoResult";
 import LocalSearchBar from "@/components/shared/Search/LocalSearchBar";
@@ -16,11 +17,16 @@ export default async function Home({ searchParams }: SearchParamsProps) {
   const { userId } = auth();
   if (!userId) return null;
 
-  const mongoUser = await getUserById({ userId });
+  const mongoUser = await getUserById({
+    userId,
+  });
   if (!mongoUser?.onboarded) redirect("/onboarding");
 
   const result = await GetSavedQuestion({
     clerkId: userId,
+    searchQuery: searchParams.q,
+    page: searchParams.page ? +searchParams.page : 1,
+    filter: searchParams.filter,
   });
 
   return (
@@ -64,6 +70,13 @@ export default async function Home({ searchParams }: SearchParamsProps) {
             linkTitle="Ask a Question"
           />
         )}
+      </div>
+
+      <div className="mt-10">
+        <Custom_pagination
+          pageNumber={searchParams?.page ? +searchParams.page : 1}
+          isNext={result.isNext}
+        />
       </div>
     </>
   );

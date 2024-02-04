@@ -64,9 +64,7 @@ export async function getAllTags(params: GetAllTagsParams) {
 
     const { page = 1, pageSize = 10, filter, searchQuery } = params;
 
-    // Calculate the number of tags to skip based on the page number and page size
-
-    //!  const skipAmount = (page - 1) * pageSize;
+    const skipAmount = (page - 1) * pageSize;
 
     const query: FilterQuery<typeof Tag> = {};
 
@@ -93,15 +91,16 @@ export async function getAllTags(params: GetAllTagsParams) {
         break;
     }
 
-    const tags = await Tag.find(query).sort(sortOptions);
-    // .skip(skipAmount)
-    // .limit(pageSize);
+    const tags = await Tag.find(query)
+      .sort(sortOptions)
+      .skip(skipAmount)
+      .limit(pageSize);
 
-    //const totalTags = await Tag.countDocuments(query);
+    const totalTags = await Tag.countDocuments(query);
 
-    //const isNext = totalTags > skipAmount + tags.length;
+    const isNext = totalTags > skipAmount + tags.length;
 
-    return { tags };
+    return { tags, isNext };
   } catch (error) {
     console.log(error);
     throw error;

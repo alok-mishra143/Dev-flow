@@ -9,6 +9,7 @@ import type { SearchParamsProps } from "@/types";
 import type { Metadata } from "next";
 import LocalSearchBar from "@/components/shared/Search/LocalSearchBar";
 import { getAllTags } from "@/lib/actions/tag.action";
+import Custom_pagination from "@/components/shared/Custom_pagination";
 
 export const metadata: Metadata = {
   title: "Tags — DevOverflow",
@@ -18,7 +19,7 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllTags({
     searchQuery: searchParams.q,
     filter: searchParams.filter,
-    // page: searchParams.page ? +searchParams.page : 1,
+    page: searchParams.page ? +searchParams.page : 1,
   });
 
   return (
@@ -82,12 +83,12 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
         )}
       </section>
 
-      {/* <div className="mt-10">
-        <Pagination
+      <div className="mt-10">
+        <Custom_pagination
           pageNumber={searchParams?.page ? +searchParams.page : 1}
           isNext={result.isNext}
         />
-      </div> */}
+      </div>
     </>
   );
 };

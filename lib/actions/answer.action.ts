@@ -45,12 +45,41 @@ export async function getAnswers(params: GetAnswersParams) {
   try {
     connectToDatabase();
 
-    const { questionId } = params;
+    const { questionId, page = 1, pageSize = 5, sortBy } = params;
+
+    // Calculate the number of answers to skip based on the page number and page size
+    const skipAmount = (page - 1) * pageSize;
+
+    let sortOptions = {};
+
+    switch (sortBy) {
+      case "highestUpvotes":
+        sortOptions = { upvotes: -1 };
+        break;
+      case "lowestUpvotes":
+        sortOptions = { upvotes: 1 };
+        break;
+      case "recent":
+        sortOptions = { createdAt: -1 };
+        break;
+      case "old":
+        sortOptions = { createdAt: 1 };
+        break;
+      default:
+        break;
+    }
+
     const answer = await Answer.find({ question: questionId })
       .populate("author", "_id name picture clerkId")
-      .sort({ createdAt: -1 });
+      .sort(sortOptions)
+      .skip(skipAmount)
+      .limit(pageSize);
 
-    return { answer };
+    const totalAnswers = await Answer.countDocuments({ question: questionId });
+
+    const isNext = totalAnswers > skipAmount + answer.length;
+
+    return { answer, isNext };
   } catch (error) {
     console.log(error);
     throw error;
