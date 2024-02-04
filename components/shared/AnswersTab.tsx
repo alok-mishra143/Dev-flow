@@ -2,6 +2,7 @@ import type { UserId } from "@/lib/actions/shared.types";
 import { getUserAnswers } from "@/lib/actions/user.action";
 import type { SearchParamsProps } from "@/types";
 import AnswerCard from "../card/AnswerCard";
+import Custom_pagination from "./Custom_pagination";
 
 interface Props extends SearchParamsProps, UserId {
   clerkId?: string | null;
@@ -26,12 +27,12 @@ const AnswersTab = async ({ searchParams, userId, clerkId }: Props) => {
         />
       ))}
 
-      {/* <div className="mt-10">
-        <Pagination
+      <div className="mt-10">
+        <Custom_pagination
           pageNumber={searchParams?.page ? +searchParams.page : 1}
           isNext={result.isNext}
         />
-      </div> */}
+      </div>
     </>
   );
 };

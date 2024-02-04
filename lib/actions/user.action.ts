@@ -91,6 +91,7 @@ export async function getAllUsers(prams: GetAllUsersParams) {
     connectToDatabase();
 
     const { page = 1, pageSize = 10, filter, searchQuery } = prams;
+    const skipAmount = (page - 1) * pageSize;
 
     const query: FilterQuery<typeof User> = {};
 
@@ -117,9 +118,16 @@ export async function getAllUsers(prams: GetAllUsersParams) {
         break;
     }
 
-    const users = await User.find(query).sort(sortOptions);
+    const users = await User.find(query)
+      .sort(sortOptions)
+      .skip(skipAmount)
+      .limit(pageSize);
 
-    return { users };
+    const totalUsers = await User.countDocuments(query);
+
+    const isNext = totalUsers > skipAmount + users.length;
+
+    return { users, isNext };
   } catch (error) {
     console.log(error);
     throw error;
@@ -168,6 +176,7 @@ export async function GetSavedQuestion(params: GetSavedQuestionParams) {
     connectToDatabase();
 
     const { clerkId, page = 1, pageSize = 10, filter, searchQuery } = params;
+    const skipAmount = (page - 1) * pageSize;
 
     const query: FilterQuery<typeof Question> = {};
 
@@ -202,6 +211,8 @@ export async function GetSavedQuestion(params: GetSavedQuestionParams) {
       match: query,
       options: {
         sort: sortOptions,
+        skip: skipAmount,
+        limit: pageSize + 1,
       },
       populate: [
         { path: "tags", model: Tag, select: "_id name" },
@@ -214,7 +225,8 @@ export async function GetSavedQuestion(params: GetSavedQuestionParams) {
     }
 
     const savedQuestions = user.saved;
-    return { question: savedQuestions };
+    const isNext = user.saved.length > pageSize;
+    return { question: savedQuestions, isNext };
   } catch (error) {
     console.log(error);
     throw error;
@@ -246,7 +258,7 @@ export async function getUserQuestions(params: GetUserStatsParams) {
   try {
     connectToDatabase();
 
-    const { userId, page = 1, pageSize = 10 } = params;
+    const { userId, page = 1, pageSize = 5 } = params;
 
     const totalQuestions = await Question.countDocuments({
       author: userId,
@@ -275,7 +287,7 @@ export async function getUserAnswers(params: GetUserStatsParams) {
   try {
     connectToDatabase();
 
-    const { userId, page = 1, pageSize = 10 } = params;
+    const { userId, page = 1, pageSize = 5 } = params;
 
     const totalAnswers = await Answer.countDocuments({
       author: userId,

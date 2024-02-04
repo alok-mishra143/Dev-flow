@@ -1,4 +1,5 @@
 import UserCard from "@/components/card/UserCard";
+import Custom_pagination from "@/components/shared/Custom_pagination";
 import Filter from "@/components/shared/Filter";
 import LocalSearchBar from "@/components/shared/Search/LocalSearchBar";
 import { UserFilters } from "@/constants/filters";
@@ -11,6 +12,7 @@ import React from "react";
 const Page = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllUsers({
     searchQuery: searchParams.q,
+    page: searchParams.page ? +searchParams.page : 1,
 
     filter: searchParams.filter,
   });
@@ -44,6 +46,13 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
           </div>
         )}
       </section>
+
+      <div className="mt-10">
+        <Custom_pagination
+          pageNumber={searchParams?.page ? +searchParams.page : 1}
+          isNext={result.isNext}
+        />
+      </div>
     </>
   );
 };

@@ -7,13 +7,16 @@ import Image from "next/image";
 import { getTimestamp } from "@/lib/utils";
 import ParseHTML from "./ParseHTML";
 import Votes from "./Votes";
+import Custom_pagination from "./Custom_pagination";
+import {
+  OptionalFilter,
+  OptionalPage,
+  QuestionId,
+  UserId,
+} from "@/lib/actions/shared.types";
 
-interface Props {
-  userId: string;
-  questionId: string;
+interface Props extends QuestionId, UserId, OptionalPage, OptionalFilter {
   totalAnswers: number;
-  filter?: string;
-  page?: number;
 }
 
 const AllAnswers = async ({
@@ -23,8 +26,10 @@ const AllAnswers = async ({
   filter,
   page,
 }: Props) => {
-  const result: { answer: Omit<any, never>[] } = await getAnswers({
+  const result = await getAnswers({
     questionId,
+    sortBy: filter,
+    page,
   });
 
   return (
@@ -78,6 +83,13 @@ const AllAnswers = async ({
             <ParseHTML data={answer.content} />
           </article>
         ))}
+      </div>
+
+      <div className="mt-10">
+        <Custom_pagination
+          pageNumber={page ? +page : 1}
+          isNext={result.isNext}
+        />
       </div>
     </div>
   );

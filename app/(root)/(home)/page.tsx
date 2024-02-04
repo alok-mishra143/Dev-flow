@@ -2,6 +2,7 @@ import HomeFilter from "@/components/Home/HomeFilter";
 import QuestionCard from "@/components/card/QuestionCard";
 import Filter from "@/components/shared/Filter";
 import NoResult from "@/components/shared/NoResult";
+import Pagination from "@/components/shared/Custom_pagination";
 import LocalSearchBar from "@/components/shared/Search/LocalSearchBar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
@@ -9,55 +10,12 @@ import { GetQuestion } from "@/lib/actions/Question.action";
 import { SearchParamsProps } from "@/types";
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
-
-// const question = [
-//   {
-//     _id: '1',
-//     title: 'How to use react',
-//     tags: [
-//       {
-//         _id: '1',
-//         name: 'react'
-//       }
-//     ],
-//     author: [
-//       {
-//         _id: '1',
-//         name: 'sushant',
-//         picture: ''
-//       }
-//     ],
-//     upvotes: 10,
-//     view: 10,
-//     answer: [], // Provide a more specific type for answers if possible
-//     createdAt: new Date('2023-01-01')
-//   },
-//   {
-//     _id: '2',
-//     title: 'How to use next js',
-//     tags: [
-//       {
-//         _id: '2',
-//         name: 'next js'
-//       }
-//     ],
-//     author: [
-//       {
-//         _id: '2',
-//         name: 'Alok',
-//         picture: ''
-//       }
-//     ],
-//     upvotes: 100000,
-//     view: 10000,
-//     answer: [], // Provide a more specific type for answers if possible
-//     createdAt: new Date('2023-01-01')
-//   }
-// ];
+import Custom_pagination from "@/components/shared/Custom_pagination";
 
 export default async function Home({ searchParams }: SearchParamsProps) {
   const result = await GetQuestion({
     searchQuery: searchParams.q,
+    page: searchParams.page ? +searchParams.page : 1,
 
     filter: searchParams.filter,
   });
@@ -112,6 +70,12 @@ export default async function Home({ searchParams }: SearchParamsProps) {
             linkTitle="Ask a Question"
           />
         )}
+      </div>
+      <div className="mt-10">
+        <Custom_pagination
+          pageNumber={searchParams?.page ? +searchParams.page : 1}
+          isNext={result.isNext}
+        />
       </div>
     </>
   );
