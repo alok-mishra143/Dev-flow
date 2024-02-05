@@ -12,6 +12,12 @@ import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import Custom_pagination from "@/components/shared/Custom_pagination";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home — DevOverflow",
+};
+
 export default async function Home({ searchParams }: SearchParamsProps) {
   const result = await GetQuestion({
     searchQuery: searchParams.q,

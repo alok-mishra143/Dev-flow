@@ -6,6 +6,12 @@ import { auth } from "@clerk/nextjs";
 import { useParams } from "next/navigation";
 import React from "react";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Edit Question — DevOverflow",
+};
+
 const Page = async ({ params }: ParamsProps) => {
   const { userId } = auth();
 
