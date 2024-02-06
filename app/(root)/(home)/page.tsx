@@ -6,9 +6,12 @@ import Pagination from "@/components/shared/Custom_pagination";
 import LocalSearchBar from "@/components/shared/Search/LocalSearchBar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
-import { GetQuestion } from "@/lib/actions/Question.action";
+import {
+  GetQuestion,
+  getRecommendedQuestions,
+} from "@/lib/actions/Question.action";
 import { SearchParamsProps } from "@/types";
-import { UserButton } from "@clerk/nextjs";
+import { UserButton, auth } from "@clerk/nextjs";
 import Link from "next/link";
 import Custom_pagination from "@/components/shared/Custom_pagination";
 
@@ -19,12 +22,30 @@ export const metadata: Metadata = {
 };
 
 export default async function Home({ searchParams }: SearchParamsProps) {
-  const result = await GetQuestion({
-    searchQuery: searchParams.q,
-    page: searchParams.page ? +searchParams.page : 1,
+  const { userId: clerkId } = auth();
 
-    filter: searchParams.filter,
-  });
+  let result;
+
+  if (searchParams?.filter === "recommended") {
+    if (clerkId) {
+      result = await getRecommendedQuestions({
+        userId: clerkId,
+        searchQuery: searchParams.q,
+        page: searchParams.page ? +searchParams.page : 1,
+      });
+    } else {
+      result = {
+        question: [],
+        isNext: false,
+      };
+    }
+  } else {
+    result = await GetQuestion({
+      searchQuery: searchParams.q,
+      filter: searchParams.filter,
+      page: searchParams.page ? +searchParams.page : 1,
+    });
+  }
 
   return (
     <>
