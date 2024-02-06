@@ -84,6 +84,7 @@ export async function CreateQuestion(prams: CreateQuestionParams) {
     });
 
     const tagDocument = [];
+    let newTagsCounter = 0;
 
     //getting the tags from the database
 
@@ -95,13 +96,38 @@ export async function CreateQuestion(prams: CreateQuestionParams) {
         { upsert: true, new: true }
       );
 
-      tagDocument.push(existingTag._id);
+      if (!existingTag) newTagsCounter++;
+
+      const isexistingTag = await Tag.findOneAndUpdate(
+        { name: { $regex: new RegExp(`^${tag}$`, "i") } },
+        { $setOnInsert: { name: tag }, $push: { questions: question._id } },
+        { upsert: true, new: true }
+      );
+
+      tagDocument.push(isexistingTag._id);
     }
     await Question.findByIdAndUpdate(question._id, {
       $push: { tags: { $each: tagDocument } },
     });
 
     //craete a question and tags
+
+    await Interaction.create({
+      user: author,
+      action: "ask_question",
+      question: question._id,
+      tags: tagDocument,
+    });
+
+    // increment author's reputation by +S for creating a question
+    await User.findByIdAndUpdate(author, { $inc: { reputation: 5 } });
+
+    // increment user's reputation by +S for creating a new tag (S = 3)
+    if (newTagsCounter > 0) {
+      await User.findByIdAndUpdate(author, {
+        $inc: { reputation: newTagsCounter * 3 },
+      });
+    }
 
     revalidatePath(path);
   } catch (e) {
@@ -161,6 +187,17 @@ export async function upVoteQuestion(params: QuestionVoteParams) {
     }
 
     //increment author reputation
+    if (userId !== question.author.toString()) {
+      // increment user's reputation by +S for upvoting/revoking an upvote to the question (S = 2)
+      await User.findByIdAndUpdate(userId, {
+        $inc: { reputation: hasupVoted ? -2 : 2 },
+      });
+
+      // increment author's reputation by +S for upvoting/revoking an upvote to the question (S = 10)
+      await User.findByIdAndUpdate(question.author, {
+        $inc: { reputation: hasupVoted ? -10 : 10 },
+      });
+    }
 
     revalidatePath(path);
   } catch (error) {
@@ -199,6 +236,17 @@ export async function downVoteQuestion(params: QuestionVoteParams) {
     }
 
     //increment author reputation
+    if (userId !== question.author.toString()) {
+      // decrement user's reputation by +S for downvoting/revoking an downvote to the question (S = 2)
+      await User.findByIdAndUpdate(userId, {
+        $inc: { reputation: hasdownVoted ? 2 : -2 },
+      });
+
+      // decrement author's reputation by +S for downvoting/revoking an downvote to the question (S = 10)
+      await User.findByIdAndUpdate(question.author, {
+        $inc: { reputation: hasdownVoted ? -10 : 10 },
+      });
+    }
 
     revalidatePath(path);
   } catch (error) {

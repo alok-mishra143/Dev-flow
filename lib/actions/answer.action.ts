@@ -11,6 +11,7 @@ import {
 import Question from "@/database/question.model";
 import { revalidatePath } from "next/cache";
 import Interaction from "@/database/interaction.model";
+import User from "@/database/user.model";
 
 export async function createAnswer(params: CreateAnswerParams) {
   try {
@@ -31,8 +32,16 @@ export async function createAnswer(params: CreateAnswerParams) {
     });
 
     // create an interaction record for the user's create_answer action
+    await Interaction.create({
+      user: author,
+      action: "answer",
+      question,
+      answer: newAnswer._id,
+      tags: questionObj.tag,
+    });
 
     // increment author's reputation by +S for creating a answer
+    await User.findByIdAndUpdate(author, { $inc: { reputation: 10 } });
 
     revalidatePath(path);
   } catch (error) {
@@ -117,6 +126,18 @@ export async function upVoteAnswer(params: AnswerVoteParams) {
 
     //increment author reputation
 
+    if (userId !== answer.author.toString()) {
+      // increment user's reputation by +S for upvoting/revoking an upvote to the answer (S = 2)
+      await User.findByIdAndUpdate(userId, {
+        $inc: { reputation: hasupVoted ? -2 : 2 },
+      });
+
+      // increment author's reputation by +S for upvoting/revoking an upvote to the answer (S = 10)
+      await User.findByIdAndUpdate(answer.author, {
+        $inc: { reputation: hasupVoted ? -10 : 10 },
+      });
+    }
+
     revalidatePath(path);
   } catch (error) {
     console.log(error);
@@ -154,6 +175,18 @@ export async function downVoteAnswer(params: AnswerVoteParams) {
     }
 
     //increment author reputation
+
+    if (userId !== answer.author.toString()) {
+      // decrement author's reputation by +S for downvoting/revoking an downvote to the answer (S = 2)
+      await User.findByIdAndUpdate(userId, {
+        $inc: { reputation: hasdownVoted ? -2 : 2 },
+      });
+
+      // decrement author's reputation by +S for downvoting/revoking an downvote to the answer (S = 10)
+      await User.findByIdAndUpdate(answer.author, {
+        $inc: { reputation: hasdownVoted ? -10 : 10 },
+      });
+    }
 
     revalidatePath(path);
   } catch (error) {
