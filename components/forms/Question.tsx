@@ -26,6 +26,7 @@ import { CreateQuestion, editQuestion } from "@/lib/actions/Question.action";
 
 import { useRouter, usePathname } from "next/navigation";
 import { useTheme } from "@/context/ThemeProvider";
+import { toast } from "../ui/use-toast";
 
 interface props {
   type?: string;
@@ -114,8 +115,19 @@ const Question = ({ questionDetails, type, mongoUserId }: props) => {
         router.push("/");
       }
     } catch (error) {
+      toast({
+        title: `Error ${type === "Edit" ? "editing" : "posting"} question ⚠️`,
+        variant: "destructive",
+      });
     } finally {
       setIsSubmitting(false);
+
+      toast({
+        title: `Question ${
+          type === "Edit" ? "edited" : "posted"
+        } successfully 🎉`,
+        variant: "default",
+      });
     }
   }
   return (

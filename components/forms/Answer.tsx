@@ -19,6 +19,7 @@ import { QuestionId } from "@/lib/actions/shared.types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createAnswer } from "@/lib/actions/answer.action";
 import { usePathname } from "next/navigation";
+import { toast } from "../ui/use-toast";
 
 interface Props extends QuestionId {
   type?: string;
@@ -64,10 +65,21 @@ const Answer = ({
         editorRef.current.setContent("");
       }
     } catch (error) {
+      toast({
+        title: `Error ${type === "Edit" ? "editing" : "submitting"} answer ⚠️`,
+        variant: "destructive",
+      });
       console.log(error);
       throw error;
     } finally {
       setisSubmitting(false);
+
+      toast({
+        title: `Answer ${
+          type === "Edit" ? "edited" : "submitted"
+        } successfully 🎉`,
+        variant: "default",
+      });
     }
   }
 
@@ -101,8 +113,20 @@ const Answer = ({
     } catch (error) {
       console.error(error);
       // Handle errors here, e.g., show an error message
+      toast({
+        title: "Error generating AI answer ⚠️",
+        variant: "destructive",
+      });
+
+      console.log(error);
+      throw error;
     } finally {
       setIsSubmittingAi(false);
+
+      toast({
+        title: "AI answer generated successfully 🎉",
+        variant: "default",
+      });
     }
   };
 
