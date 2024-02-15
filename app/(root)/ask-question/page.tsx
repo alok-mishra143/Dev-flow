@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import React from "react";
 
 import type { Metadata } from "next";
+import Loading from "./loading";
 
 export const metadata: Metadata = {
   title: "Ask a Question — DevOverflow",
