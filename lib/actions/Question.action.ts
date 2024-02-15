@@ -49,7 +49,7 @@ export async function GetQuestion(params: GetQuestionsParams) {
         query.answers = { $size: 0 };
         break;
       default:
-        break;
+        sortOptions = { createdAt: -1 };
     }
 
     const question = await Question.find(query)
