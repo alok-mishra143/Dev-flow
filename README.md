@@ -76,6 +76,8 @@ Before getting started, ensure that you have the following accounts and keys set
     WEBHOOK_SECRET=<your-signing-secret>
     NEXT_PUBLIC_TINY_EDITOR_API=<your-tinymce-api-key>
     MONGODB_URL=<your-mongodb-url>
+    NEXT_PUBLIC_SERVER_URL=http://localhost:3000/
+    BARD_API_KEY=<bard api key>
     ```
 
    Replace `<your-...>` with the actual values from your respective accounts.
