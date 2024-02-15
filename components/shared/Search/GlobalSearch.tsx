@@ -50,20 +50,16 @@ const GlobalSearch = () => {
 
         router.push(newUrl, { scroll: false });
       } else {
-        if (query) {
+        if (!query) {
           const newUrl = removeKeysFromQuery({
             params: searchParams.toString(),
             keysToRemove: ["global", "type"],
           });
-          if (query === "") {
-            router.push("/", { scroll: false });
-            setisopen(false);
-          }
 
           router.push(newUrl, { scroll: false });
         }
       }
-    }, 200);
+    }, 300);
 
     return () => clearTimeout(delayDebounceFn);
   }, [search, pathname, router, searchParams, query]);
