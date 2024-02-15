@@ -59,7 +59,7 @@ const GlobalSearch = () => {
           router.push(newUrl, { scroll: false });
         }
       }
-    }, 300);
+    }, 200);
 
     return () => clearTimeout(delayDebounceFn);
   }, [search, pathname, router, searchParams, query]);
