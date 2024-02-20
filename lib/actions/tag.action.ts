@@ -20,19 +20,23 @@ export async function getTopIneractedTags(prams: GetTopInteractedTagsParams) {
 
     const user = await User.findById(userId);
 
-    if (!user) {
-      throw new Error("user not found");
-    }
+    if (!user) throw new Error("User not found");
 
-    //find the interaction
+    // find interactions for the user and groups by tags
+    const interactions = await Question.aggregate([
+      { $match: { author: userId } },
+      { $unwind: "$tags" },
+      { $group: { _id: "$tags", count: { $sum: 1 } } },
+      { $sort: { count: -1 } },
+      { $limit: limit },
+    ]);
 
-    //interaction
+    // find the tags from the interactions
+    const tags = await Tag.find({
+      _id: { $in: interactions.map((i) => i._id) },
+    });
 
-    return [
-      { _id: 1, name: "tag1" },
-      { _id: 2, name: "tag2" },
-      { _id: 3, name: "tag3" },
-    ];
+    return tags;
   } catch (error) {
     console.log(error);
     throw error;
