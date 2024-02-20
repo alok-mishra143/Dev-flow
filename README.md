@@ -1,51 +1,46 @@
-# DevFlow: Empowering Developers Beyond StackOverflow
 
 
-currently woking on this so some feature are not working 
 
 
-![image](https://github.com/alok-mishra143/Dev-flow/assets/100504874/4b549597-c6cd-4f80-bff5-c843cbf8988e)
-
+# ![DevFlow Logo](https://github.com/alok-mishra143/Dev-flow/assets/100504874/4b549597-c6cd-4f80-bff5-c843cbf8988e)
 
 ## Overview
 
-Welcome to DevFlow, the upgraded form of StackOverflow designed to enhance the development experience for developers worldwide. DevFlow is a collaborative platform that goes beyond traditional Q&A, fostering a community-driven ecosystem where developers can seamlessly share knowledge, collaborate on projects, and elevate their coding skills.
+Welcome to **DevFlow**, the upgraded form of StackOverflow designed to enhance the development experience for developers worldwide. DevFlow is a collaborative platform that goes beyond traditional Q&A, fostering a community-driven ecosystem where developers can seamlessly share knowledge, collaborate on projects, and elevate their coding skills. 🌐🚀
 
 ## Features
 
-### 1. **Collaborative Knowledge Sharing**
+### 1. Collaborative Knowledge Sharing
 
-DevFlow encourages developers to share their expertise through detailed articles, tutorials, and best practices. The platform is not just limited to solving problems; it's a space to showcase and discuss innovative solutions and industry insights.
+DevFlow encourages developers to share their expertise through detailed articles, tutorials, and best practices. The platform is not just limited to solving problems; it's a space to showcase and discuss innovative solutions and industry insights. 📚💡
 
-### 2. **Project Collaboration**
+### 2. Project Collaboration
 
-Elevate your projects by collaborating with other developers on DevFlow. Create project spaces, share code snippets, and discuss implementation details to foster a culture of collaboration and knowledge exchange.
+Elevate your projects by collaborating with other developers on DevFlow. Create project spaces, share code snippets, and discuss implementation details to foster a culture of collaboration and knowledge exchange. 👥🤝
 
-### 3. **Advanced Search and Filtering**
+### 3. Advanced Search and Filtering
 
-Effortlessly find the information you need with our advanced search and filtering capabilities. DevFlow allows you to search not only by keywords but also by technology, programming language, and other relevant criteria, ensuring you get the most accurate and valuable results.
+Effortlessly find the information you need with our advanced search and filtering capabilities. DevFlow allows you to search not only by keywords but also by technology, programming language, and other relevant criteria, ensuring you get the most accurate and valuable results. 🔍🎯
 
-### 4. **Upvote and Downvote System**
+### 4. Upvote and Downvote System
 
-DevFlow employs a voting system that allows the community to collectively curate content. Upvote valuable contributions to highlight their significance, and downvote misleading or irrelevant information to maintain the quality of the platform.
+DevFlow employs a voting system that allows the community to collectively curate content. Upvote valuable contributions to highlight their significance, and downvote misleading or irrelevant information to maintain the quality of the platform. 👍👎
 
-### 5. **Gamified Learning**
+### 5. Gamified Learning
 
-Engage in a gamified learning experience on DevFlow. Earn badges and reputation points as you contribute to the community, motivating you to share your knowledge and participate actively.
+Engage in a gamified learning experience on DevFlow. Earn badges and reputation points as you contribute to the community, motivating you to share your knowledge and participate actively. 🏆🎮
 
 ## Getting Started
 
 To get started with DevFlow, follow these simple steps:
 
-1. **Create an Account:** Sign up for a DevFlow account to unlock all the features and join the vibrant developer community.
+1. **Create an Account:** Sign up for a DevFlow account to unlock all the features and join the vibrant developer community. 🌟
 
-2. **Explore Content:** Dive into the vast repository of articles, tutorials, and projects. Use the search and filtering options to find content relevant to your interests.
+2. **Explore Content:** Dive into the vast repository of articles, tutorials, and projects. Use the search and filtering options to find content relevant to your interests. 🔍📄
 
-3. **Contribute:** Share your knowledge by creating articles, tutorials, or collaborating on projects. Don't forget to engage with the community by commenting and providing feedback.
+3. **Contribute:** Share your knowledge by creating articles, tutorials, or collaborating on projects. Don't forget to engage with the community by commenting and providing feedback. 💬✍️
 
-4. **Earn Reputation:** Build your reputation on DevFlow by actively participating in discussions, helping others, and contributing valuable content. Watch your badges and reputation points grow as you become an integral part of the community.
-
-##
+4. **Earn Reputation:** Build your reputation on DevFlow by actively participating in discussions, helping others, and contributing valuable content. Watch your badges and reputation points grow as you become an integral part of the community. 📈👏
 
 # Installation Guide
 
@@ -58,8 +53,8 @@ Before getting started, ensure that you have the following accounts and keys set
 - [Clerk Account](https://clerk.dev/) for Authentication and User Management.
 - [MongoDB Database](https://www.mongodb.com/) for storing data.
 - [TinyMCE Account](https://www.tiny.cloud/) for rich text editing.
-- [OpenAI Account](https://beta.openai.com/signup/) for utilizing the OpenAI API.
-- [RapidAPI Account](https://rapidapi.com/) and subscription to the JSearch API.
+- [Bard API  Account]() for utilizing the Bard  API.
+
 
 ## Configuration
 
@@ -76,6 +71,8 @@ Before getting started, ensure that you have the following accounts and keys set
     WEBHOOK_SECRET=<your-signing-secret>
     NEXT_PUBLIC_TINY_EDITOR_API=<your-tinymce-api-key>
     MONGODB_URL=<your-mongodb-url>
+    NEXT_PUBLIC_SERVER_URL=http://localhost:3000/
+    BARD_API_KEY=<bard api key>
     ```
 
    Replace `<your-...>` with the actual values from your respective accounts.
@@ -89,8 +86,6 @@ Before getting started, ensure that you have the following accounts and keys set
 5. For events, select "user."
 6. Click "Create" to generate the webhook.
 7. Retrieve the signing secret and set it as `CLERK_WEBHOOK_SECRET` in the `.env` file.
-
-
 
 ## Clone and Run Locally
 
@@ -120,7 +115,7 @@ To clone and run DevFlow locally, follow these instructions:
 
 ## Tech Stack
 
-DevFlow is built with Next.js 14 and TypeScript. Make sure you have Node.js and npm installed on your machine before following the installation steps.
+DevFlow is built with Next.js 14 and TypeScript. Make sure you have Node.js and npm installed on your machine before following the installation steps. 🛠️💻
 
 ## Community Guidelines
 
@@ -129,8 +124,6 @@ To ensure a positive and collaborative environment, please adhere to our communi
 - Be respectful and considerate of others' opinions.
 - Provide constructive feedback and avoid unnecessary criticism.
 - Refrain from spamming or engaging in any form of malicious activity.
-- Ensure your contributions align with our content guidelines.
+- Ensure your contributions align with our content guidelines. 🤝🚀
 
-
-
-Happy coding on DevFlow! 🚀
+Happy coding on DevFlow! 🚀🌟
