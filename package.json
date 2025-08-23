@@ -21,7 +21,7 @@
     "@radix-ui/react-tabs": "^1.0.4",
     "@radix-ui/react-toast": "^1.1.5",
     "@tailwindcss/typography": "^0.5.10",
-    "@tinymce/tinymce-react": "^4.3.2",
+    "@tinymce/tinymce-react": "^6.3.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "eslint-config-prettier": "^9.0.0",
@@ -30,8 +30,8 @@
     "html-react-parser": "^5.0.11",
     "lucide-react": "^0.294.0",
     "mongodb": "^6.3.0",
-    "mongoose": "^8.0.3",
-    "next": "14.0.3",
+    "mongoose": "^8.18.0",
+    "next": "^14.2.32",
     "prettier": "^3.1.0",
     "prismjs": "^1.29.0",
     "query-string": "^8.1.0",
@@ -41,6 +41,7 @@
     "svix": "^1.15.0",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
+    "tinymce": "^8.0.2",
     "zod": "^3.22.4"
   },
   "devDependencies": {
