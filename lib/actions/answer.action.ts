@@ -124,7 +124,7 @@ export async function upVoteAnswer(params: AnswerVoteParams) {
       throw new Error("Answer not found");
     }
 
-    //increment author reputation
+    // increment author reputation
 
     if (userId !== answer.author.toString()) {
       // increment user's reputation by +S for upvoting/revoking an upvote to the answer (S = 2)
@@ -174,7 +174,7 @@ export async function downVoteAnswer(params: AnswerVoteParams) {
       throw new Error("Answer not found");
     }
 
-    //increment author reputation
+    // increment author reputation
 
     if (userId !== answer.author.toString()) {
       // decrement author's reputation by +S for downvoting/revoking an downvote to the answer (S = 2)

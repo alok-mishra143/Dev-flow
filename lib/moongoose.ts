@@ -2,13 +2,13 @@ import mongoose from "mongoose";
 
 declare global {
   // cached mongoose connection for dev hot-reloads
-  // eslint-disable-next-line no-var
+  // eslint-disable-next-line no-var, no-unused-vars
   var _mongoose:
     | { conn: typeof mongoose | null; promise: Promise<typeof mongoose> | null }
     | undefined;
 }
 
-const MONGODB_URI = process.env.MONGODB_URL;
+const MONGODB_URI = process.env.MONGODB_URI || process.env.MONGODB_URL;
 
 if (!MONGODB_URI) {
   console.log("mongodb url missing");
@@ -26,7 +26,7 @@ export const connectToDatabase = async () => {
   }
 
   if (!global._mongoose?.promise) {
-    global._mongoose.promise = mongoose
+    global._mongoose!.promise = mongoose
       .connect(MONGODB_URI as string, { dbName: "devflow" })
       .then((m) => {
         global._mongoose!.conn = m;
@@ -40,5 +40,5 @@ export const connectToDatabase = async () => {
       });
   }
 
-  return global._mongoose.promise;
+  return global._mongoose!.promise;
 };

@@ -60,7 +60,7 @@ export async function getTagById(params: GetTagByIdParams) {
   }
 }
 
-//get all getTags
+// get all getTags
 
 export async function getAllTags(params: GetAllTagsParams) {
   try {
