@@ -14,7 +14,7 @@ import Question from "@/database/question.model";
 
 export async function getTopIneractedTags(prams: GetTopInteractedTagsParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { userId, limit = 3 } = prams;
 
@@ -45,7 +45,7 @@ export async function getTopIneractedTags(prams: GetTopInteractedTagsParams) {
 
 export async function getTagById(params: GetTagByIdParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { tagId } = params;
 
@@ -64,7 +64,7 @@ export async function getTagById(params: GetTagByIdParams) {
 
 export async function getAllTags(params: GetAllTagsParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { page = 1, pageSize = 10, filter, searchQuery } = params;
 
@@ -113,7 +113,7 @@ export async function getAllTags(params: GetAllTagsParams) {
 
 export async function getQuestionByTagId(params: GetQuestionByTagIdParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { tagId, page = 1, pageSize = 10, searchQuery } = params;
 
@@ -157,7 +157,7 @@ export async function getQuestionByTagId(params: GetQuestionByTagIdParams) {
 
 export async function getTopPopularTags() {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const popularTags = await Tag.aggregate([
       { $project: { name: 1, numberOfQuestions: { $size: "$questions" } } },
