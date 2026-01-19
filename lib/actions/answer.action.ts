@@ -15,7 +15,7 @@ import User from "@/database/user.model";
 
 export async function createAnswer(params: CreateAnswerParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { content, author, question, path } = params;
 
@@ -52,7 +52,7 @@ export async function createAnswer(params: CreateAnswerParams) {
 
 export async function getAnswers(params: GetAnswersParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { questionId, page = 1, pageSize = 5, sortBy } = params;
 
@@ -97,7 +97,7 @@ export async function getAnswers(params: GetAnswersParams) {
 
 export async function upVoteAnswer(params: AnswerVoteParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { answerId, userId, hasupVoted, hasdownVoted, path } = params;
 
@@ -124,7 +124,7 @@ export async function upVoteAnswer(params: AnswerVoteParams) {
       throw new Error("Answer not found");
     }
 
-    //increment author reputation
+    // increment author reputation
 
     if (userId !== answer.author.toString()) {
       // increment user's reputation by +S for upvoting/revoking an upvote to the answer (S = 2)
@@ -147,7 +147,7 @@ export async function upVoteAnswer(params: AnswerVoteParams) {
 
 export async function downVoteAnswer(params: AnswerVoteParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { answerId, userId, hasupVoted, hasdownVoted, path } = params;
 
@@ -174,7 +174,7 @@ export async function downVoteAnswer(params: AnswerVoteParams) {
       throw new Error("Answer not found");
     }
 
-    //increment author reputation
+    // increment author reputation
 
     if (userId !== answer.author.toString()) {
       // decrement author's reputation by +S for downvoting/revoking an downvote to the answer (S = 2)
@@ -197,7 +197,7 @@ export async function downVoteAnswer(params: AnswerVoteParams) {
 
 export async function deleteAnswer(params: DeleteAnswerParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { answerId, path } = params;
 

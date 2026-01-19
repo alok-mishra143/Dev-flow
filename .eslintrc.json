@@ -1,4 +1,18 @@
 {
-  "extends": ["next/core-web-vitals","standard","plugin:tailwindcss/recommended","prettier " ]
+  "extends": ["next/core-web-vitals","standard","plugin:tailwindcss/recommended","prettier" ],
+  "rules": {
+    "spaced-comment": "off",
+    "no-unused-vars": "off",
+    "import/no-duplicates": "off",
+    "camelcase": "off",
+    "eqeqeq": "off",
+    "import/first": "off",
+    "react/jsx-key": "off",
+    "no-undef": "off",
+    "object-shorthand": "off",
+    "tailwindcss/classnames-order": "off",
+    "tailwindcss/no-custom-classname": "off",
+    "tailwindcss/enforces-shorthand": "off",
+    "tailwindcss/no-unnecessary-arbitrary-value": "off"
+  }
 }
- 

@@ -22,7 +22,7 @@ import { assignBadges } from "../utils";
 
 export async function getUserById(prams: GetUserByIdParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { userId } = prams;
 
     const user = await User.findOne({
@@ -38,7 +38,7 @@ export async function getUserById(prams: GetUserByIdParams) {
 
 export async function createUser(userData: CreateUserParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const newUser = await User.create(userData);
     return newUser;
@@ -50,7 +50,7 @@ export async function createUser(userData: CreateUserParams) {
 
 export async function updateUser(userData: UpdateUserParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { clerkId, updateData, path } = userData;
     await User.findOneAndUpdate({ clerkId }, updateData, { new: true });
@@ -63,7 +63,7 @@ export async function updateUser(userData: UpdateUserParams) {
 
 export async function deleteUser(userData: DeleteUserParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { clerkId } = userData;
 
@@ -77,7 +77,7 @@ export async function deleteUser(userData: DeleteUserParams) {
 
     await Question.deleteMany({ author: user._id });
 
-    //TODO delete commnet ans etc..
+    // TODO delete commnet ans etc..
 
     const deletedUser = await User.findByIdAndDelete(user._id);
 
@@ -90,7 +90,7 @@ export async function deleteUser(userData: DeleteUserParams) {
 
 export async function getAllUsers(prams: GetAllUsersParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { page = 1, pageSize = 10, filter, searchQuery } = prams;
     const skipAmount = (page - 1) * pageSize;
@@ -138,7 +138,7 @@ export async function getAllUsers(prams: GetAllUsersParams) {
 
 export async function ToggleSaveQuestion(params: ToggleSaveQuestionParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { userId, questionId, path } = params;
 
@@ -175,7 +175,7 @@ export async function ToggleSaveQuestion(params: ToggleSaveQuestionParams) {
 
 export async function GetSavedQuestion(params: GetSavedQuestionParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { clerkId, page = 1, pageSize = 10, filter, searchQuery } = params;
     const skipAmount = (page - 1) * pageSize;
@@ -237,7 +237,7 @@ export async function GetSavedQuestion(params: GetSavedQuestionParams) {
 
 export async function getUserInfo(prams: GetUserByIdParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { userId } = prams;
     const user = await User.findOne({ clerkId: userId });
@@ -325,7 +325,7 @@ export async function getUserInfo(prams: GetUserByIdParams) {
 
 export async function getUserQuestions(params: GetUserStatsParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { userId, page = 1, pageSize = 5 } = params;
 
@@ -354,7 +354,7 @@ export async function getUserQuestions(params: GetUserStatsParams) {
 
 export async function getUserAnswers(params: GetUserStatsParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { userId, page = 1, pageSize = 5 } = params;
 

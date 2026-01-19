@@ -12,7 +12,7 @@ const SearchableTypes = ["question", "user", "answer", "tag"];
 
 export async function globalSearch(params: SearchParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { query, type } = params;
     const regexQuery = { $regex: query, $options: "i" };

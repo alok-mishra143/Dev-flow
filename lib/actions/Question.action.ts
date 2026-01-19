@@ -20,7 +20,7 @@ import { FilterQuery } from "mongoose";
 
 export async function GetQuestion(params: GetQuestionsParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { page = 1, pageSize = 20, filter, searchQuery } = params;
     const skipAmount = (page - 1) * pageSize;
@@ -72,7 +72,7 @@ export async function GetQuestion(params: GetQuestionsParams) {
 
 export async function CreateQuestion(prams: CreateQuestionParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { title, content, tags, author, path } = prams;
 
     //create a question
@@ -138,7 +138,7 @@ export async function CreateQuestion(prams: CreateQuestionParams) {
 
 export async function GetQuestionById(params: GetQuestionByIdParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { questionId } = params;
 
@@ -159,7 +159,7 @@ export async function GetQuestionById(params: GetQuestionByIdParams) {
 
 export async function upVoteQuestion(params: QuestionVoteParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { questionId, userId, hasupVoted, hasdownVoted, path } = params;
 
@@ -208,7 +208,7 @@ export async function upVoteQuestion(params: QuestionVoteParams) {
 
 export async function downVoteQuestion(params: QuestionVoteParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { questionId, userId, hasupVoted, hasdownVoted, path } = params;
 
@@ -257,7 +257,7 @@ export async function downVoteQuestion(params: QuestionVoteParams) {
 
 export async function deleteQuestion(params: DeleteQuestionParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { questionId, path } = params;
     await Question.deleteOne({ _id: questionId });
     await Answer.deleteMany({ question: questionId });
@@ -277,7 +277,7 @@ export async function deleteQuestion(params: DeleteQuestionParams) {
 
 export async function editQuestion(params: EditQuestionParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { questionId, title, content, path } = params;
 
@@ -301,7 +301,7 @@ export async function editQuestion(params: EditQuestionParams) {
 
 export async function getHotQuestions() {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const hotQuestions = await Question.find({})
       .sort({
@@ -319,7 +319,7 @@ export async function getHotQuestions() {
 
 export async function getRecommendedQuestions(params: RecommendedParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { userId, page = 1, pageSize = 20, searchQuery } = params;
 
